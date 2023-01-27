@@ -1,9 +1,6 @@
 package pages;
 
-import java.sql.Driver;
-
 import org.openqa.selenium.By;
-
 import base.BaseClass;
 
 public class LoginPage extends BaseClass{
@@ -45,15 +42,13 @@ public class LoginPage extends BaseClass{
 		return this;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public boolean validateLoginFailedText() {
+		boolean result = driver.findElement(oLoginFailedInnerText).isDisplayed();
+		return result;
+	}
 
+	public RegistrationPage clickOnRegistrationLink() {
+		driver.findElement(oRegisterLink).click();
+		return new RegistrationPage();
+	}
 }
