@@ -1,13 +1,12 @@
 package testscenarios;
 
-import java.util.Random;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import base.BaseClass;
 import pages.LoginPage;
 import pages.RegistrationPage;
+import utilities.FakerDataFactory;
 
 public class TC002_Registration extends BaseClass{
 	
@@ -30,14 +29,14 @@ public class TC002_Registration extends BaseClass{
 	public void registrationWithMandatoryFields() {
 		boolean result = new LoginPage()
 		.clickOnRegistrationLink()
-		.enterFirstName("Credo")
-		.selectTitle("Mr")
-		.enterMiddleName(" ")
-		.enterLastName("Systemz")
-		.selectGender("Male")
-		.enterUserName("credosystemz"+getRandomIntNumber(1,10000))
-		.enterEmail("credosystemz"+getRandomIntNumber(1,10000)+"@gmail.com")
-		.enterPassword("Testing123")
+		.enterFirstName(FakerDataFactory.getFirstName())
+		.selectTitle(FakerDataFactory.getTitle())
+		.enterMiddleName(FakerDataFactory.getMiddleName())
+		.enterLastName(FakerDataFactory.getLastName())
+		.selectGender(FakerDataFactory.getGender())
+		.enterUserName(FakerDataFactory.getUserName())
+		.enterEmail(FakerDataFactory.getEmailAddress())
+		.enterPassword(FakerDataFactory.getPassword())
 		.clickOnRegisterBtn()
 		.verifyUserRegistration()
 		.clickOnUILogo()
@@ -50,10 +49,4 @@ public class TC002_Registration extends BaseClass{
 		
 	}
 	
-	public int getRandomIntNumber(int start,int end) {
-		Random ran = new Random();
-		int result = ran.nextInt((end - start)+1) + 1;
-		return result;
-	}
-
 }

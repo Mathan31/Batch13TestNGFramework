@@ -8,26 +8,33 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+
+import utilities.ExcelReader;
+import utilities.PropertiesReader;
 
 public class BaseClass {
 	public  static WebDriver driver;
-	public  int iBrowserType = 1;
-	public String sURL = "https://uibank.uipath.com/";
+	public String prodFileName = "Environment_Details";
+	public  String iBrowserType = PropertiesReader.getPropertyValue(prodFileName, "browser");
+	public String sURL = PropertiesReader.getPropertyValue(prodFileName, "production");
+	public String excelName = "";
 	
 	@BeforeClass
 	public  void invokingBrowser() {
+		iBrowserType = iBrowserType.toLowerCase();
 		switch (iBrowserType) {
-		case 1:
+		case "chrome":
 			System.out.println("User option is : "+iBrowserType+" ,So invoking Chrome Browser. ");
 			driver = new ChromeDriver();
 			break;
 			
-		case 2:
+		case "firefox":
 			System.out.println("User option is : "+iBrowserType+" ,So invoking FF Browser. ");
 			driver = new FirefoxDriver();
 			break;
 			
-		case 3:
+		case "edge":
 			System.out.println("User option is : "+iBrowserType+" ,So invoking Edge Browser. ");
 			driver = new EdgeDriver();
 			break;
@@ -49,5 +56,11 @@ public class BaseClass {
 		driver.quit();
 	}
 	
+	
+	@DataProvider(name="ExcelData")
+	public Object[][] readExcelValue() {
+		Object[][] valueFromExcel = ExcelReader.getValueFromExcel(excelName);
+		return valueFromExcel;
+	}
 
 }
