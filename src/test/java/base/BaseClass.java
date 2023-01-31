@@ -14,12 +14,12 @@ import utilities.ExcelReader;
 import utilities.PropertiesReader;
 
 public class BaseClass {
-	public  static WebDriver driver;
+	public WebDriver driver;
 	public String prodFileName = "Environment_Details";
-	public  String iBrowserType = PropertiesReader.getPropertyValue(prodFileName, "browser");
+	public String iBrowserType = PropertiesReader.getPropertyValue(prodFileName, "browser");
 	public String sURL = PropertiesReader.getPropertyValue(prodFileName, "production");
 	public String excelName = "";
-	
+	//465454 --> null
 	@BeforeClass
 	public  void invokingBrowser() {
 		iBrowserType = iBrowserType.toLowerCase();

@@ -12,11 +12,11 @@ public class TC002_Registration extends BaseClass{
 	
 	@Test(priority = 1)
 	public void registrationFieldValidation() {
-		boolean resultRegistration = new LoginPage()
+		boolean resultRegistration = new LoginPage(driver)
 		.clickOnRegistrationLink()
 		.verifyAllTheRegistrationFields();
 		
-		boolean result = new RegistrationPage()
+		boolean result = new RegistrationPage(driver)
 		.clickOnUILogo()
 		.validateLoginUIElements();
 		
@@ -27,7 +27,7 @@ public class TC002_Registration extends BaseClass{
 	
 	@Test(priority = 2)
 	public void registrationWithMandatoryFields() {
-		boolean result = new LoginPage()
+		boolean result = new LoginPage(driver)
 		.clickOnRegistrationLink()
 		.enterFirstName(FakerDataFactory.getFirstName())
 		.selectTitle(FakerDataFactory.getTitle())
