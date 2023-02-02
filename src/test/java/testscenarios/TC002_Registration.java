@@ -1,6 +1,7 @@
 package testscenarios;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import base.BaseClass;
@@ -9,6 +10,13 @@ import pages.RegistrationPage;
 import utilities.FakerDataFactory;
 
 public class TC002_Registration extends BaseClass{
+	
+	@BeforeTest
+	public void dataSetUp() {
+		testName = "Registration Validation";
+		testDescription = "Validate Registration with mandatory and non mandatory fields";
+		module = "Registration";
+	}
 	
 	@Test(priority = 1)
 	public void registrationFieldValidation() {

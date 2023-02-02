@@ -12,6 +12,9 @@ public class TC001_Login extends BaseClass{
 	@BeforeTest
 	public void dataSetUp() {
 		excelName = "TC001";
+		testName = "Login Validation";
+		testDescription = "Validate Login with valid and invalid credential";
+		module = "Login";
 	}
 	
 	@Test(priority = 1)
