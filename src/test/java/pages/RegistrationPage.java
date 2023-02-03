@@ -4,7 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 
-import base.BaseClass; 
+import com.aventstack.extentreports.ExtentTest;
+
+import base.BaseClass;
+import libraries.SeleniumWrapper; 
 
 public class RegistrationPage extends BaseClass{
 	
@@ -20,14 +23,17 @@ public class RegistrationPage extends BaseClass{
 	private By oGender = By.id("sex");
 	private By oUILogo = By.xpath("//a[@class='navbar-brand']");
 	private WebDriver driver;
+	private SeleniumWrapper oWrap;
 	
-	public RegistrationPage(WebDriver driver) {
+	public RegistrationPage(WebDriver driver,ExtentTest node) {
 		this.driver = driver;
+		this.node = node;
+		oWrap = new SeleniumWrapper(driver, node);
 	}
 	
 	public boolean verifyAllTheRegistrationFields() {
-		if(driver.findElement(oUserName).isDisplayed() && driver.findElement(oPassword).isDisplayed()
-				&& driver.findElement(oEmail).isDisplayed()&& driver.findElement(oRegister).isDisplayed()) {
+		if(oWrap.verifyDisplayedwithReturn(driver.findElement(oUserName)) && oWrap.verifyDisplayedwithReturn(driver.findElement(oPassword))
+				&& oWrap.verifyDisplayedwithReturn(driver.findElement(oEmail))&& oWrap.verifyDisplayedwithReturn(driver.findElement(oRegister),"Register Button")) {
 			return true;		
 		}else {
 			return false;
@@ -35,54 +41,52 @@ public class RegistrationPage extends BaseClass{
 	}
 	
 	public RegistrationPage enterFirstName(String fName) {
-		driver.findElement(oFirstName).sendKeys(fName);
+		oWrap.type(driver.findElement(oFirstName), fName);
 		return this;
 	}
 	
 	public RegistrationPage selectTitle(String title) {
-		Select select = new Select(driver.findElement(oTitle));
-		select.selectByVisibleText(title);
+		oWrap.selectDropDownUsingVisibleText(driver.findElement(oTitle), title);
 		return this;
 	}
 	
 	public RegistrationPage enterMiddleName(String mName) {
-		driver.findElement(oMiddleName).sendKeys(mName);
+		oWrap.type(driver.findElement(oMiddleName), mName);
 		return this;
 	}
 	
 	public RegistrationPage enterLastName(String lName) {
-		driver.findElement(oLastName).sendKeys(lName);
+		oWrap.type(driver.findElement(oLastName), lName);
 		return this;
 	}
 	
 	public RegistrationPage selectGender(String gender) {
-		Select select = new Select(driver.findElement(oGender));
-		select.selectByVisibleText(gender);
+		oWrap.selectDropDownUsingVisibleText(driver.findElement(oGender), gender);
 		return this;
 	}
 	
 	public RegistrationPage enterUserName(String uName) {
-		driver.findElement(oUserName).sendKeys(uName);
+		oWrap.type(driver.findElement(oUserName), uName);
 		return this;
 	}
 	
 	public RegistrationPage enterEmail(String email) {
-		driver.findElement(oEmail).sendKeys(email);
+		oWrap.type(driver.findElement(oEmail), email);
 		return this;
 	}
 	
 	public RegistrationPage enterPassword(String password) {
-		driver.findElement(oPassword).sendKeys(password);
+		oWrap.type(driver.findElement(oPassword), password);
 		return this;
 	}
 	
 	public EmailVerificationPage clickOnRegisterBtn() {
-		driver.findElement(oRegister).click();
-		return new EmailVerificationPage(driver);
+		oWrap.click(driver.findElement(oRegister));
+		return new EmailVerificationPage(driver,node);
 	}
 
 	public LoginPage clickOnUILogo() {
-		driver.findElement(oUILogo).click();
-		return new LoginPage(driver);
+		oWrap.click(driver.findElement(oUILogo),"UIBank Logo");
+		return new LoginPage(driver,node);
 	}
 }

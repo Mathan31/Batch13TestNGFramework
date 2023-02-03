@@ -3,6 +3,8 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import com.aventstack.extentreports.ExtentTest;
+
 import base.BaseClass;
 import libraries.SeleniumWrapper;
 
@@ -17,14 +19,16 @@ public class LoginPage extends BaseClass{
 	private WebDriver driver;
 	private SeleniumWrapper oWrap;
 	
-	public LoginPage(WebDriver driver) { 
+	public LoginPage(WebDriver driver,ExtentTest node) { 
 		this.driver = driver;
+		this.node = node;
+		oWrap = new SeleniumWrapper(driver, node);
 	}
 	
 	public boolean validateLoginUIElements() {
-		if(driver.findElement(oUsernameText).isDisplayed() && 
-				driver.findElement(oPasswordText).isDisplayed() &&
-				driver.findElement(oSignInBtn).isDisplayed()) {
+		if(oWrap.verifyDisplayedwithReturn(driver.findElement(oUsernameText))  && 
+				oWrap.verifyDisplayedwithReturn(driver.findElement(oPasswordText)) &&
+				oWrap.verifyDisplayedwithReturn(driver.findElement(oSignInBtn), "SignIn Button")) {
 			return true;
 		}else {
 			return false;
@@ -32,32 +36,32 @@ public class LoginPage extends BaseClass{
 	}
 	
 	public LoginPage enterUserName(String uName) {
-		driver.findElement(oUsernameText).sendKeys(uName);
+		oWrap.type(driver.findElement(oUsernameText), uName);
 		return this;
 	}
 	
 	public LoginPage enterPassword(String password) {
-		driver.findElement(oPasswordText).sendKeys(password);
+		oWrap.type(driver.findElement(oPasswordText), password);
 		return this;
 	}
 	
 	public HomePage clickOnSignInButton() {
-		driver.findElement(oSignInBtn).click();
-		return new HomePage(driver);
+		oWrap.click(driver.findElement(oSignInBtn));
+		return new HomePage(driver,node);
 	}
 	
 	public LoginPage clickOnSignInButtonWithInvalid() {
-		driver.findElement(oSignInBtn).click();
+		oWrap.click(driver.findElement(oSignInBtn));
 		return this;
 	}
 	
 	public boolean validateLoginFailedText() {
-		boolean result = driver.findElement(oLoginFailedInnerText).isDisplayed();
+		boolean result = oWrap.verifyDisplayedwithReturn(driver.findElement(oLoginFailedInnerText), "Login Fail Text");
 		return result;
 	}
 
 	public RegistrationPage clickOnRegistrationLink() {
-		driver.findElement(oRegisterLink).click();
-		return new RegistrationPage(driver);
+		oWrap.click(driver.findElement(oRegisterLink));
+		return new RegistrationPage(driver,node);
 	}
 }

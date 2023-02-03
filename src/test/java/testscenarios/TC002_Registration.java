@@ -16,15 +16,17 @@ public class TC002_Registration extends BaseClass{
 		testName = "Registration Validation";
 		testDescription = "Validate Registration with mandatory and non mandatory fields";
 		module = "Registration";
+		authors = "Indrajith";
+		category = "Regression";
 	}
 	
 	@Test(priority = 1)
 	public void registrationFieldValidation() {
-		boolean resultRegistration = new LoginPage(driver)
+		boolean resultRegistration = new LoginPage(driver,node)
 		.clickOnRegistrationLink()
 		.verifyAllTheRegistrationFields();
 		
-		boolean result = new RegistrationPage(driver)
+		boolean result = new RegistrationPage(driver,node)
 		.clickOnUILogo()
 		.validateLoginUIElements();
 		
@@ -35,7 +37,7 @@ public class TC002_Registration extends BaseClass{
 	
 	@Test(priority = 2)
 	public void registrationWithMandatoryFields() {
-		boolean result = new LoginPage(driver)
+		boolean result = new LoginPage(driver,node)
 		.clickOnRegistrationLink()
 		.enterFirstName(FakerDataFactory.getFirstName())
 		.selectTitle(FakerDataFactory.getTitle())

@@ -37,7 +37,7 @@ public class BaseClass extends HTMLReport{
 	}
 	
 	@AfterSuite
-	public void endReport() {
+	public void stopReport() {
 		endReport();
 	}
 
